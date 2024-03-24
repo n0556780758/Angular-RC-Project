@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-7">
+      <input class="form-control" [(ngModel)]="textInput" type="text" placeholder="Search..." (keyup)="search()">
+    </div>
+    <div class="col-md-5">
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary" (click)="clear()">Clear</button>
+        <button type="button" class="btn btn-primary" (click)="refresh()">Refresh</button>
+        <button type="button" class="btn btn-primary" (click)="sort()">Sort
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div [ngClass]="{'list-group': !isGridView, 'row': isGridView}">
+    <ng-container *ngIf="isGridView; else listView">
+      <!-- Grid View -->
+      <div class="col-sm-6" *ngFor="let item of dataFilter">
+        <app-item-data [item]="item" [isGridView]="isGridView" (titleChanged)="changeTitle($event)"
+          (viewDetails)="navigateToItemDetails($event)"></app-item-data>
+      </div>
+    </ng-container>
+    <ng-template #listView>
+      <!-- List View -->
+      <div class="list-group-item" *ngFor="let item of dataFilter">
+        <app-item-data [item]="item" [isGridView]="isGridView" (titleChanged)="changeTitle($event)"
+          (viewDetails)="navigateToItemDetails($event)"></app-item-data>
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+<!-- <div [ngClass]="{'list-group': !isGridView, 'row': isGridView}" *ngFor="let item of dataFilter">
+    <div [ngClass]="{'list-group-item': !isGridView, 'col-sm-4': isGridView}">
+      <app-item-data [item]="item" (titleChanged)="changeTitle($event)"
+        (viewDetails)="navigateToItemDetails($event)"></app-item-data>
+    </div>
+  </div> -->

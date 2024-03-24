@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <ul class="nav flex-column nav-tabs">
+        <li class="nav-item" *ngFor="let tab of tabs">
+          <a class="nav-link" (click)="switchTab(tab)" [class.active]="activeTab === tab">
+            <span>{{ tab.name }} ({{ tab.count }})</span>
+          </a>
+        </li>
+      </ul>
+      <button class="btn btn-primary" (click)="toggleViewMode()">
+        {{ isGridView ? 'Switch to List View' : 'Switch to Grid View' }}
+      </button>
+    </div>
+    <div class="col-md-9" *ngIf="!activeItem">
+      <app-data-list [activeTab]="activeTab" [data]="data" (dataChanged)="loadData()" [isGridView]="isGridView" (viewDetails)="viewItemDetails($event)"></app-data-list>
+    </div>
+    <div *ngIf="activeItem" class="col-md-9">
+      <button class="col-md-2" class="btn btn-primary btn-block" (click)="changeRoute()">Back</button>
+      <app-item-data class="col-md-7" [item]="activeItem"></app-item-data>
+    </div>
+  </div>
+</div>
